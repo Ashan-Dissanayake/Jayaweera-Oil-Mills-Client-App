@@ -1,0 +1,28 @@
+mat-card {
+  padding: 20px;
+  background: #f0f5f5;
+}
+
+mat-card-title {
+  padding: 5px 10px 10px 10px;
+  font-family: 'system-ui';
+  color: #000000;
+  text-align: center;
+}
+
+mat-card-content {
+  padding: 5px 10px 10px 10px;
+  font-family: 'system-ui';
+  color: #000033;
+}
+
+button {
+  float: right;
+  margin: auto;
+  padding: 5px 40px 5px 40px !important;
+  background-color: gray;
+}
+button:hover {
+  background-color: dodgerblue;
+  color: white;
+}

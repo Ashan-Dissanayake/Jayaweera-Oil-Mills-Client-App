@@ -1,0 +1,77 @@
+<mat-toolbar>
+  <mat-toolbar-row>
+
+    <span class="toolbar-left">
+    <button mat-icon-button (click)="opened=!opened" ><mat-icon>menu</mat-icon></button>
+      <img src="/assets/jom-logo.jpg" class="img-logo">
+    </span>
+
+    <span class="toolbar-right">
+      <label >Admin User</label>
+      <img src="assets/user.png" class="img-user"/>
+      <button mat-icon-button (click)="logout()" class="btn-logout"><mat-icon>exit_to_app</mat-icon> </button>
+    </span>
+
+  </mat-toolbar-row>
+</mat-toolbar>
+
+<mat-sidenav-container>
+  <mat-sidenav [(opened)]="opened" mode="side">
+
+    <mat-nav-list>
+
+      <mat-card-title><a routerLink="home"> <mat-icon>home</mat-icon> Home</a></mat-card-title>
+      <mat-card-title><a> <mat-icon>widgets</mat-icon> Dashboard</a></mat-card-title>
+
+      <mat-expansion-panel>
+        <mat-expansion-panel-header >
+          <mat-expansion-panel-title><a><mat-icon>person</mat-icon>Admin</a></mat-expansion-panel-title>
+        </mat-expansion-panel-header>
+          <mat-list-item><a routerLink="employee">Employee</a></mat-list-item>
+          <mat-list-item><a routerLink="user">User</a></mat-list-item>
+          <mat-list-item><a>Privilege</a></mat-list-item>
+          <mat-list-item><a>Emp. Attendance</a></mat-list-item>
+          <mat-list-item><a>Task</a></mat-list-item>
+      </mat-expansion-panel>
+
+      <mat-expansion-panel>
+        <mat-expansion-panel-header>
+          <mat-expansion-panel-title><a><mat-icon>add_shopping_cart</mat-icon>Purchase</a></mat-expansion-panel-title>
+        </mat-expansion-panel-header>
+        <mat-list-item><a>Raw material Purchase</a></mat-list-item>
+      </mat-expansion-panel>
+
+      <mat-expansion-panel>
+        <mat-expansion-panel-header>
+          <mat-expansion-panel-title><a><mat-icon>shop_two</mat-icon>Production</a></mat-expansion-panel-title>
+        </mat-expansion-panel-header>
+        <mat-list-item><a routerLink="product" >Product</a></mat-list-item>
+      </mat-expansion-panel>
+
+      <mat-expansion-panel>
+        <mat-expansion-panel-header>
+          <mat-expansion-panel-title><a><mat-icon>insert_chart</mat-icon>Sales</a></mat-expansion-panel-title>
+        </mat-expansion-panel-header>
+        <mat-list-item><a>Total Product Sales</a></mat-list-item>
+      </mat-expansion-panel>
+
+
+
+      <mat-expansion-panel>
+        <mat-expansion-panel-header>
+          <mat-expansion-panel-title><a><mat-icon>bar_chart</mat-icon>Reports</a></mat-expansion-panel-title>
+        </mat-expansion-panel-header>
+        <mat-list-item><a>Product Sales Report</a></mat-list-item>
+        <mat-list-item><a>Product Inventory Report</a></mat-list-item>
+        <mat-list-item><a>Raw Material Purchase Report</a></mat-list-item>
+        <mat-list-item><a>Raw Material Inventory Report</a></mat-list-item>
+        <mat-list-item><a></a></mat-list-item>
+      </mat-expansion-panel>
+    </mat-nav-list>
+  </mat-sidenav>
+
+  <mat-sidenav-content>
+    <router-outlet></router-outlet>
+  </mat-sidenav-content>
+
+</mat-sidenav-container>

@@ -1,0 +1,16 @@
+<mat-card>
+  <mat-card-title>{{data.heading}}<hr></mat-card-title>
+
+  <mat-card-content>
+    <ng-container *ngFor="let line of lines">
+      <span>{{line}}</span><br/>
+    </ng-container>
+
+  </mat-card-content>
+  <mat-card-actions>
+    <button mat-button [mat-dialog-close]="true" cdkFocusInitial>Yes</button>
+    <button mat-button [mat-dialog-close]="false" cdkFocusInitial>No</button>
+  </mat-card-actions>
+</mat-card>
+
+

@@ -1,0 +1,33 @@
+<body>
+  <header>
+    <h1> Jayaweera Oil Mills</h1>
+  </header>
+  <main>
+
+    <form id="login_form" class="form_class" [formGroup]="loginform">
+      <div class="header2"> Member Login </div>
+      <hr>
+      <br>
+      <div class="form_div">
+        <label>User Name:</label>
+        <input class="field_class" formControlName="username" type="text" autofocus autocomplete="off">
+        <label>Password:</label>
+        <input id="pass" class="field_class" formControlName="password" type="password"  autocomplete="off">
+
+        <div>
+          <button class="reset_class" type="reset" >Reset</button>
+          <button class="submit_class" type="submit" (click)="authenticate()">Sign In</button>
+        </div>
+
+        <div>
+          <button class="register_class" type="submit" (click)="signup()">Sign Up</button>
+        </div>
+
+      </div>
+
+    </form>
+  </main>
+  <footer>
+    <p>Visit Us <a href="https://web.facebook.com/Jayaweera-Oil-Mill-2278727605704727/" target="_blank">Jayaweera Oil Mills&trade; - 2023&COPY;</a></p>
+  </footer>
+  </body>

@@ -1,0 +1,95 @@
+mat-grid-list{
+  height: 100%;
+}
+
+mat-card {
+  width: 170%;
+  height: 100%;
+  margin: 10px 10px -5px 10px !important;
+  overflow: hidden;
+}
+
+mat-card-content {
+  overflow: auto;
+  height: 100%;
+}
+mat-card-title{
+  font-family: ui-sans-serif;
+  font-size: 22px;
+}
+
+mat-grid-tile{
+  overflow: visible;
+}
+
+mat-card-header {
+  background: #ccebff;
+  border-radius: 5px;
+  padding: 6px 10px;
+}
+
+.mat-table {
+  display: block;
+  width: 100%;
+}
+
+#loading img{
+  width: 30px;
+  height: 30px;
+  margin-left: 620px;
+}
+.mat-paginator-sticky {
+  position: sticky;
+  bottom: 1px;
+}
+
+.csearch{
+  height: 40px;
+  width: 100%;
+  margin-top: 5px;
+}
+
+#ssearch mat-card-content{padding-top: 30px}
+
+#ssearch mat-form-field{padding-left: 15px; width: 250px}
+
+#ssearch button{width: 195px; margin-left: 10px; margin-top: 5px; background-color: #3bab5a
+}
+/* Employee Form */
+#employeeform { padding-top: 20px; }
+
+/* Employee Form > Photo Panel */
+#imgpanel { height: 100px; margin-bottom: 30px; }
+#imgpanel img{ height: 100px; width: 100px; }
+#selectbutton, #clearbutton{
+  width: 150px; display: block;
+  margin-left: 150px; margin-bottom: 5px;
+  background-color: darkolivegreen;
+  color: white; padding: 8px;
+  border-radius: 5px;
+  text-align: center; }
+#selectbutton{ margin-top: -100px; }
+
+/* Employee Form > Button Panel */
+#butpanel{ margin-top: 30px; margin-bottom: 30px; }
+#butpanel button{ width: 82px; margin:3px; background-color: #435f3b; color: white; }
+
+.selected-row{
+  background-color: #c9e6ff!important;
+}
+
+.mat-row:hover{
+  background-color: inherit!important;
+}
+
+.mat-form-field .ng-dirty{
+  background-color: #80bdff;
+}
+
+button:disabled{
+  opacity: 0.5;
+}
+
+#employeeform mat-form-field .ng-dirty{
+  background-color: gold;
+}

@@ -1,0 +1,140 @@
+* {
+  padding: 0px;
+  margin: 0px;
+}
+body {
+  background: url("/assets/login-bg.jpg") no-repeat center center;
+}
+header {
+  background-color: #006600;
+  color: #FFFFFF;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 11vh;
+  box-shadow: 5px 5px 10px rgb(0,0,0,0.3);
+}
+h1 {
+  letter-spacing: 0.5vw;
+  font-family: 'ui-sans-serif';
+  text-transform: uppercase;
+  text-align: center;
+  font-size: 50px;
+}
+main {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 79vh;
+  width: 100%;
+  background: no-repeat center center;
+  background-size: cover;
+}
+.form_class {
+  width: 500px;
+  height: 450px;
+  padding: 35px;
+  border-radius: 8px;
+  background-color: white;
+  font-family: 'system-ui';
+  box-shadow: 5px 5px 10px rgb(0,0,0,0.3);
+}
+.form_div {
+  text-transform: uppercase;
+  height: 300px;
+}
+.form_div > label {
+  letter-spacing: 3px;
+  font-size: 1rem;
+}
+.info_div {
+  text-align: center;
+  margin-top: 20px;
+}
+.info_div {
+  letter-spacing: 1px;
+}
+.field_class {
+  width: 100%;
+  border-radius: 6px;
+  border-style: solid;
+  border-width: 1px;
+  padding: 5px 0px;
+  text-indent: 6px;
+  margin-top: 10px;
+  margin-bottom: 20px;
+  font-family: 'system-ui';
+  font-size: 0.9rem;
+  letter-spacing: 2px;
+}
+.submit_class {
+  border-style: none;
+  border-radius: 5px;
+  background-color: #33cc33;
+  padding: 8px 20px;
+  font-family: 'system-ui';
+  text-transform: uppercase;
+  letter-spacing: .8px;
+  float: right;
+  margin: auto;
+  margin-top: 10px;
+  box-shadow: 2px 2px 5px rgb(0,0,0,0.2);
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.reset_class {
+  border-style: none;
+  border-radius: 5px;
+  background-color: #cccccc;
+  padding: 8px 20px;
+  font-family: 'system-ui';
+  text-transform: uppercase;
+  margin-top: 10px;
+  box-shadow: 2px 2px 5px rgb(0,0,0,0.2);
+  cursor: pointer;
+  font-weight: bold;
+
+}
+
+.register_class {
+  border-style: none;
+  border-radius: 5px;
+  background-color: #3333cc;
+  padding: 8px 20px;
+  font-family: 'system-ui';
+  text-transform: uppercase;
+  letter-spacing: .8px;
+  display: block;
+  margin: auto;
+  margin-top: 10px;
+  box-shadow: 2px 2px 5px rgb(0,0,0,0.2);
+  cursor: pointer;
+  font-weight: bold;
+}
+footer {
+  height: 10vh;
+  background-color: black;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: -5px -5px 10px rgb(0,0,0,0.3);
+}
+footer > p {
+  text-align: center;
+  font-family: 'system-ui';
+  letter-spacing: 3px;
+}
+footer > p > a {
+  text-decoration: none;
+  color: white;
+  font-weight: bold;
+}
+.header2{
+  text-align: center;
+  font-size: 40px;
+  padding-bottom: 15px;
+  font-family: ui-sans-serif;
+  text-blink: "true";
+}
