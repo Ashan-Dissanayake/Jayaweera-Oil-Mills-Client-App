@@ -511,4 +511,56 @@ export class ProductComponent {
     }
   }
 
+
+  delete() : void {
+
+    const confirm = this.dg.open(ConfirmComponent, {
+      width: '500px',
+      data: {
+        heading: "Confirmation - Product Delete",
+        message: "Are you sure to Delete following User? <br> <br>" + this.product.name
+      }
+    });
+
+    confirm.afterClosed().subscribe(async result => {
+      if (result) {
+        let delstatus: boolean = false;
+        let delmessage: string = "Server Not Found";
+
+        this.ps.delete(this.product.id).then((responce: [] | undefined) => {
+
+          if (responce != undefined) { // @ts-ignore
+            delstatus = responce['errors'] == "";
+            if (!delstatus) { // @ts-ignore
+              delmessage = responce['errors'];
+            }
+          } else {
+            delstatus = false;
+            delmessage = "Content Not Found"
+          }
+        }).finally(() => {
+          if (delstatus) {
+            delmessage = "Successfully Deleted";
+            this.form.reset();
+            this.clearImage();
+            Object.values(this.form.controls).forEach(control => {
+              control.markAsTouched();
+            });
+            this.loadTable("");
+          }
+          const stsmsg = this.dg.open(MessageComponent, {
+            width: '500px',
+            data: {heading: "Status - Product Delete ", message: delmessage}
+          });
+          stsmsg.afterClosed().subscribe(async result => {
+            if (!result) {
+              return;
+            }
+          });
+
+        });
+      }
+    });
+  }
+
 }
