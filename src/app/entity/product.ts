@@ -2,10 +2,12 @@ import {Subcategory} from "./subcategory";
 import {Producttype} from "./producttype";
 import {Productstatus} from "./productstatus";
 import {Unit} from "./unit";
+import {Category} from "./category";
 
 export class Product{
 
   public id !: number;
+  public category!:Category;
   public name !: string;
   public code !: string;
   public price !: string;
@@ -21,10 +23,11 @@ export class Product{
   public productstatus !: Productstatus;
   public unit !: Unit;
 
-  constructor(id:number, name:string,code:string,price:string,expireduration:string,description:string,stock:string,
+  constructor(id:number,category:Category, name:string,code:string,price:string,expireduration:string,description:string,stock:string,
               rpp:string,dointroduction:string,image:string,subcategory:Subcategory,producttype:Producttype,
               productstatus:Productstatus,unit:Unit) {
     this.id=id;
+    this.category = category;
     this.name=name;
     this.code=code;
     this.price=price;

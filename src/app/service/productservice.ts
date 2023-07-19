@@ -19,6 +19,7 @@ export class Productservice{
   }
 
   async add(product: Product): Promise<[]|undefined>{
+    console.log(JSON.stringify(product));
     return this.http.post<[]>('http://localhost:8080/products/',product).toPromise();
   }
 

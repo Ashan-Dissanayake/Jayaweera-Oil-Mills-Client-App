@@ -13,7 +13,20 @@ mat-card-header { background: #c0d9c3; }
 
 #ssearch button{ width: 195px; margin-left:10px; margin-top: 5px; background-color: #435f3b; color: white}
 
-#userform { padding-top: 20px; }
+#productform { padding-top: 20px; }
+
+#imgpanel { height: 100px; margin-bottom: 30px; }
+
+#imgpanel img{ height: 100px; width: 100px; }
+
+#selectbutton, #clearbutton{
+  width: 150px; display: block;
+  margin-left: 150px; margin-bottom: 5px;
+  background-color: darkolivegreen;
+  color: white; padding: 8px;
+  border-radius: 5px;
+  text-align: center; }
+#selectbutton{ margin-top: -100px; }
 
 #butpanel button{ width: 82px;margin:3px;background-color: #435f3b;color: white;}
 

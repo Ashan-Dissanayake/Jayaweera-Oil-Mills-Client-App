@@ -1,16 +1,117 @@
-<mat-grid-list [cols]="12" rowHeight="7rem">
+<mat-grid-list [cols]="12" rowHeight="5rem">
 
-  <mat-grid-tile [colspan]="7" [rowspan]="3">
+  <mat-grid-tile [colspan]="7" [rowspan]="5">
 
     <mat-card>
       <mat-card-header><mat-card-title>Product Detail</mat-card-title></mat-card-header>
       <mat-card-content id="productform">
 
+        <mat-form [formGroup]="form">
+
+          <mat-form-field appearance="outline">
+            <mat-label>Category</mat-label>
+            <mat-select formControlName="category">
+              <mat-option [value]="null" selected> Not Selected </mat-option>
+              <mat-option *ngFor="let category of categories" [value]="category">{{category.name}}</mat-option>
+            </mat-select>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline">
+            <mat-label>Subcategory</mat-label>
+            <mat-select formControlName="subcategory">
+              <mat-option [value]="null" selected> Not Selected </mat-option>
+              <mat-option *ngFor="let subcategory of subcategories" [value]="subcategory">{{subcategory.name}}</mat-option>
+            </mat-select>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline">
+            <mat-label>Name</mat-label>
+            <input matInput formControlName="name">
+          </mat-form-field>
+
+          <mat-form-field appearance="outline">
+            <mat-label>Code</mat-label>
+            <input matInput formControlName="code">
+          </mat-form-field>
+
+          <mat-form-field appearance="outline">
+            <mat-label>Price</mat-label>
+            <input matInput formControlName="price">
+          </mat-form-field>
+
+          <mat-form-field appearance="outline">
+            <mat-label>Expire Duration</mat-label>
+            <input matInput formControlName="expireduration">
+          </mat-form-field>
+
+         <mat-form-field appearance="outline">
+           <mat-label>Description</mat-label>
+           <input matInput formControlName="description">
+         </mat-form-field>
+
+          <div
+            id="imgpanel">
+            <img [src]="imageempurl">
+            <input id="userImage" hidden="hidden" (change)="selectImage($event)" Select type="file" formControlName="image">
+            <label for="userImage" id="selectbutton">Select</label>
+            <label id="clearbutton" (click)="clearImage()">Clear</label>
+          </div>
+
+          <mat-form-field appearance="outline">
+            <mat-label>Units</mat-label>
+            <mat-select formControlName="unit">
+              <mat-option [value]="null" selected> Not Selected </mat-option>
+              <mat-option *ngFor="let unit of units" [value]="unit">{{unit.name}}</mat-option>
+            </mat-select>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline">
+            <mat-label>Product Type</mat-label>
+            <mat-select formControlName="producttype">
+              <mat-option [value]="null" selected> Not Selected </mat-option>
+              <mat-option *ngFor="let producttype of producttypes" [value]="producttype">{{producttype.name}}</mat-option>
+            </mat-select>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline">
+            <mat-label>Product Status</mat-label>
+            <mat-select formControlName="productstatus">
+              <mat-option [value]="null" selected> Not Selected </mat-option>
+              <mat-option *ngFor="let productstatus of productstatuses" [value]="productstatus">{{productstatus.name}}</mat-option>
+            </mat-select>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline">
+            <mat-label>Stock</mat-label>
+            <input matInput formControlName="stock">
+          </mat-form-field>
+
+          <mat-form-field appearance="outline">
+            <mat-label>RPP</mat-label>
+            <input matInput formControlName="rpp">
+          </mat-form-field>
+
+          <mat-form-field appearance="outline">
+            <mat-label>Date of Introduced</mat-label>
+            <input matInput [matDatepicker]="doi" formControlName="dointroduction">
+            <mat-datepicker-toggle matIconSuffix [for]="doi"/>
+            <mat-datepicker #doi></mat-datepicker>
+          </mat-form-field>
+
+          <div id="butpanel">
+            <button mat-raised-button (click)="add()" >Add</button>
+            <button mat-raised-button >Clear</button>
+            <button mat-raised-button >Update</button>
+            <button mat-raised-button >Delete</button>
+          </div>
+
+        </mat-form>
+
       </mat-card-content>
     </mat-card>
   </mat-grid-tile>
 
-  <mat-grid-tile [colspan]="5" [rowspan]="3">
+  <mat-grid-tile [colspan]="5" [rowspan]="5">
 
     <mat-card id="ssearch">
       <mat-card-header><mat-card-title>Product Search</mat-card-title></mat-card-header>
@@ -32,7 +133,7 @@
           <mat-label>Status</mat-label>
           <mat-select formControlName="ssstatus">
             <mat-option [value]="null" selected> Not Selected </mat-option>
-            <mat-option *ngFor="let productstatus of productstatus" [value]="productstatus.id">{{productstatus.name}}</mat-option>
+            <mat-option *ngFor="let productstatus of productstatuses" [value]="productstatus.id">{{productstatus.name}}</mat-option>
           </mat-select>
         </mat-form-field>
 

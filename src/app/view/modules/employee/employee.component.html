@@ -79,12 +79,14 @@
             <mat-form-field appearance="outline">
               <mat-label>NIC</mat-label>
               <input matInput formControlName="nic"></mat-form-field>
+
             <mat-form-field appearance="outline">
               <mat-label>Birth Date</mat-label>
               <input matInput [matDatepicker]="dob" formControlName="dobirth">
               <mat-datepicker-toggle matIconSuffix [for]="dob"/>
               <mat-datepicker #dob></mat-datepicker>
             </mat-form-field>
+
             <div
               id="imgpanel">
               <img [src]="imageempurl">
@@ -92,15 +94,22 @@
               <label for="userImage" id="selectbutton">Select</label>
               <label id="clearbutton" (click)="clearImage()">Clear</label>
             </div>
+
             <mat-form-field appearance="outline">
               <mat-label>Address</mat-label>
-              <input matInput formControlName="address"></mat-form-field>
+              <input matInput formControlName="address">
+            </mat-form-field>
+
             <mat-form-field appearance="outline">
               <mat-label>Mobile</mat-label>
-              <input matInput formControlName="mobile"></mat-form-field>
+              <input matInput formControlName="mobile">
+            </mat-form-field>
+
             <mat-form-field appearance="outline">
               <mat-label>Land</mat-label>
-              <input matInput formControlName="land"></mat-form-field>
+              <input matInput formControlName="land">
+            </mat-form-field>
+
             <mat-form-field appearance="outline">
               <mat-label>Designation</mat-label>
               <mat-select formControlName="designation">
@@ -108,15 +117,19 @@
                 <mat-option *ngFor="let designation of designations" [value]="designation">{{designation.name}}</mat-option>
               </mat-select>
             </mat-form-field>
+
             <mat-form-field appearance="outline">
               <mat-label>Assignment Date</mat-label>
               <input matInput [matDatepicker]="assdate" formControlName="doassignment">
               <mat-datepicker-toggle matIconSuffix [for]="assdate"/><mat-datepicker #assdate></mat-datepicker>
             </mat-form-field>
+
             <mat-form-field
               appearance="outline">
               <mat-label>Description</mat-label>
-              <input matInput formControlName="description"></mat-form-field>
+              <input matInput formControlName="description">
+            </mat-form-field>
+
             <mat-form-field appearance="outline">
               <mat-label>Employee Status</mat-label>
               <mat-select formControlName="employeestatus">
@@ -124,12 +137,14 @@
                   <mat-option *ngFor="let employeestatus of employeestatuses" [value]="employeestatus">{{employeestatus.name}}</mat-option>
               </mat-select>
             </mat-form-field>
+
             <div id="butpanel">
               <button mat-raised-button (click)="add()" [disabled]="!enaadd" >Add</button>
               <button mat-raised-button (click)="clear()">Clear</button>
               <button mat-raised-button (click)="update()" [disabled]="!enaupd">Update</button>
               <button mat-raised-button (click)="delete()" [disabled]="!enadel">Delete</button>
             </div>
+
           </mat-form>
         </mat-card-content>
 
