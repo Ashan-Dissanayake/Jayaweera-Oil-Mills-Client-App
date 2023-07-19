@@ -99,10 +99,10 @@
           </mat-form-field>
 
           <div id="butpanel">
-            <button mat-raised-button (click)="add()" >Add</button>
-            <button mat-raised-button >Clear</button>
-            <button mat-raised-button >Update</button>
-            <button mat-raised-button >Delete</button>
+            <button mat-raised-button (click)="add()" [disabled]="!enaadd">Add</button>
+            <button mat-raised-button>Clear</button>
+            <button mat-raised-button (click)="update()" [disabled]="!enaupd">Update</button>
+            <button mat-raised-button  [disabled]="!enadel">Delete</button>
           </div>
 
         </mat-form>
@@ -178,7 +178,7 @@
 
           <mat-header-row *matHeaderRowDef="columns"></mat-header-row>
           <mat-header-row *matHeaderRowDef="cscolumns"></mat-header-row>
-          <mat-row *matRowDef="let row; columns: columns;"></mat-row>
+          <mat-row *matRowDef="let row; columns: columns;" (click)="fillForm(row)" [ngClass]="{'selected-row': row === selectedrow}"></mat-row>
 
         </mat-table>
 

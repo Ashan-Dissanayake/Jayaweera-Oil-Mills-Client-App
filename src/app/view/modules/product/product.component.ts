@@ -20,6 +20,7 @@ import {Unit} from "../../../entity/unit";
 import {DatePipe} from "@angular/common";
 import {RegexService} from "../../../service/RegexService";
 import {MessageComponent} from "../../../util/dialog/message/message.component";
+import {Employee} from "../../../entity/employee";
 
 @Component({
   selector: 'app-product',
@@ -61,6 +62,12 @@ export class ProductComponent {
   @ViewChild(MatPaginator) paginator!: MatPaginator;
 
   uiassist: UiAssist;
+
+  enaadd:boolean = false;
+  enaupd:boolean = false;
+  enadel:boolean = false;
+
+  selectedrow:any;
 
   constructor(
     private fb:FormBuilder,
@@ -278,6 +285,9 @@ export class ProductComponent {
           control.markAsPristine(); }
       });
     }
+
+    this.enableButtons(true,false,false);
+
   }
 
   getErrors(): string {
@@ -359,6 +369,145 @@ export class ProductComponent {
           });
         }
       });
+    }
+  }
+
+
+  fillForm(product: Product){
+
+    this.enableButtons(false,true,true);
+
+    this.selectedrow=product;
+
+    this.product = JSON.parse(JSON.stringify(product));
+    this.oldproduct = JSON.parse(JSON.stringify(product));
+
+    if (this.product.image!= null){
+      this.imageempurl = atob(this.product.image);
+      this.form.controls['image'].clearValidators();
+    } else {
+      this.clearImage();
+    }
+    this.product.image = "";
+
+
+    // @ts-ignore
+    this.product.subcategory = this.subcategories.find(s => s.id === this.product.subcategory.id);
+
+    // @ts-ignore
+    this.product.category = this.categories.find(s => s.id === this.product.subcategory.category.id);
+
+    // @ts-ignore
+    this.product.unit = this.units.find(u => u.id === this.product.unit.id);
+
+    // @ts-ignore
+    this.product.producttype = this.producttypes.find(p => p.id === this.product.producttype.id);
+
+    // @ts-ignore
+    this.product.productstatus = this.productstatuses.find(p => p.id === this.product.productstatus.id);
+
+    this.form.patchValue(this.product);
+    this.form.markAsPristine();
+  }
+
+  enableButtons(add:boolean, upd:boolean, del:boolean){
+    this.enaadd=add;
+    this.enaupd=upd;
+    this.enadel=del;
+  }
+
+  getUpdates(): string{
+    let updates: string = "";
+    for (const contolName in this.form.controls){
+      const control = this.form.controls[contolName];
+      if(control.dirty){
+        updates = updates + "<br>" + contolName.charAt(0).toUpperCase() + contolName.slice(1)+ "changed";
+      }
+    }
+    return updates;
+  }
+
+  update() {
+
+    let errors = this.getErrors();
+
+    if (errors != "") {
+      const errmsg = this.dg.open(MessageComponent, {
+        width: '500px',
+        data: {heading: "Errors - Product Update", message: "You have following errors" + errors}
+      });
+      errmsg.afterClosed().subscribe(async result => {
+        if (!result) {return;}});
+    } else {
+
+      let updates: string = this.getUpdates();
+
+      if (updates != "") {
+
+        let updstatus: boolean = false;
+        let updmessage: string = "Server Not Found";
+
+        const confirm = this.dg.open(ConfirmComponent, {
+          width: '500px',
+          data: {
+            heading: "Confirmation - Product Update",
+            message: "Are you sure to Save the following Product? <br> <br>" + updates
+          }
+        });
+
+        confirm.afterClosed().subscribe(async result => {
+          if (result) {
+            //console.log("EmployeeService.update()")
+            this.product = this.form.getRawValue();
+
+            // @ts-ignore
+            delete this.product.category
+
+            if (this.form.controls['image'].dirty) this.product.image = btoa(this.imageempurl);
+            else
+            { // @ts-ignore
+              this.product.image=this.oldproduct.image;
+            }
+            // @ts-ignore
+            this.product.id=this.oldproduct.id;
+
+            this.ps.update(this.product).then((response: [] | undefined)=>{
+              if (response != undefined){ // @ts-ignore
+                // @ts-ignore
+                updstatus = response['errors'] == "";
+                if (!updstatus){ // @ts-ignore
+                  updmessage = response['errors'];
+                }
+              } else{
+                updstatus = false;
+                updmessage = "Content not found"
+              }
+            }).finally(() => {
+              if (updstatus){
+                updmessage = "Successfully Updated";
+                this.form.reset();
+                this.clearImage();
+                this.loadTable("");
+              }
+              const stsmsg = this.dg.open(MessageComponent,{
+                width: '500px',
+                data: {heading: "Status - Product Update", message: updmessage}
+              });
+              stsmsg.afterClosed().subscribe(async result =>{if (!result){return;}})
+            });
+          }
+        });
+      } else {
+        const updmsg = this.dg.open(ConfirmComponent, {
+          width: '500px',
+          data: {heading: "Confirmation - Product Update", message: "No Changes"}
+        });
+        updmsg.afterClosed().subscribe(async result => {
+          if (!result) {
+            return;
+          }
+        });
+      }
     }
   }
 
