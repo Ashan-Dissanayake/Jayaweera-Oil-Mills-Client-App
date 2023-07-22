@@ -3,15 +3,17 @@ mat-card {  width: 100%;  height:100%;  margin: 10px 10px -10px 10px ; }
 
 mat-card-content { overflow: auto; height: 100%; }
 
-mat-card-header { background: #c0d9c3; }
+mat-card-header { background: #ccebff; }
 
-#loading img{ width: 30px; height: 25px; margin-left: 200px;}
+mat-card-title{font-family: ui-sans-serif;font-size: 22px;}
+
+#loading img{width: 30px;height: 30px;margin-left: 620px;}
 
 #ssearch mat-card-content{   padding-top: 30px; }
 
 #ssearch mat-form-field { padding-left: 15px; width: 200px; }
 
-#ssearch button{ width: 195px; margin-left:10px; margin-top: 5px; background-color: #435f3b; color: white}
+#ssearch button{ width: 195px; margin-left:10px; margin-top: 5px; background-color: #3bab5a; color: white}
 
 #productform { padding-top: 20px; }
 
@@ -22,13 +24,13 @@ mat-card-header { background: #c0d9c3; }
 #selectbutton, #clearbutton{
   width: 150px; display: block;
   margin-left: 150px; margin-bottom: 5px;
-  background-color: darkolivegreen;
+  background-color: #3bab5a;
   color: white; padding: 8px;
   border-radius: 5px;
   text-align: center; }
 #selectbutton{ margin-top: -100px; }
 
-#butpanel button{ width: 82px;margin:3px;background-color: #435f3b;color: white;}
+#butpanel button{ width: 82px;margin:3px;background-color: #3bab5a;color: white;}
 
 #listtrnasfer {display: inline-flex; margin-bottom: 30px;margin-left: 10px}
 

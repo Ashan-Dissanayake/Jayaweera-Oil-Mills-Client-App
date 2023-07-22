@@ -23,7 +23,7 @@ mat-grid-tile{
 }
 
 mat-card-header {
-  background: #ccebff;
+  background-color: #ccebff;
   border-radius: 5px;
   padding: 6px 10px;
 }
@@ -60,11 +60,13 @@ mat-card-header {
 
 /* Employee Form > Photo Panel */
 #imgpanel { height: 100px; margin-bottom: 30px; }
+
 #imgpanel img{ height: 100px; width: 100px; }
+
 #selectbutton, #clearbutton{
   width: 150px; display: block;
   margin-left: 150px; margin-bottom: 5px;
-  background-color: darkolivegreen;
+  background-color: #3bab5a;
   color: white; padding: 8px;
   border-radius: 5px;
   text-align: center; }
@@ -72,6 +74,7 @@ mat-card-header {
 
 /* Employee Form > Button Panel */
 #butpanel{ margin-top: 30px; margin-bottom: 30px; }
+
 #butpanel button{ width: 82px; margin:3px; background-color: #435f3b; color: white; }
 
 .selected-row{

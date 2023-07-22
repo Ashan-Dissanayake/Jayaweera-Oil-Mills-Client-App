@@ -35,6 +35,7 @@ import {JwtInterceptor} from "./service/JwtInterceptor";
 import {AuthorizationManager} from "./service/authorizationmanager";
 import {ProductComponent} from "./view/modules/product/product.component";
 import {UserComponent} from "./view/modules/user/user.component";
+import {OrderComponent} from "./view/modules/order/order.component";
 
 @NgModule({
   bootstrap: [AppComponent],
@@ -47,7 +48,8 @@ import {UserComponent} from "./view/modules/user/user.component";
     UserComponent,
     MessageComponent,
     ConfirmComponent,
-    ProductComponent
+    ProductComponent,
+    OrderComponent
 
   ],
   imports: [

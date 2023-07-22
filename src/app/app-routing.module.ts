@@ -6,6 +6,7 @@ import {EmployeeComponent} from "./view/modules/employee/employee.component";
 import {HomeComponent} from "./view/home/home.component";
 import {UserComponent} from "./view/modules/user/user.component";
 import {ProductComponent} from "./view/modules/product/product.component";
+import {OrderComponent} from "./view/modules/order/order.component";
 
 const routes: Routes = [
   {path: "login", component: LoginComponent},
@@ -18,6 +19,7 @@ const routes: Routes = [
       {path: "employee", component: EmployeeComponent},
       {path: "user", component: UserComponent},
       {path: "product", component: ProductComponent},
+      {path: "order", component: OrderComponent},
     ]
   },
   {

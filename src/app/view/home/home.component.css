@@ -6,8 +6,11 @@ mat-grid-list {
 mat-grid-tile:nth-child(1) mat-card{
   padding-top: 20px;
   align-items: center;
-  background-color: darkslategray;
+  background-color:  #ccebff;;
 }
+
+mat-card-title{font-family: ui-sans-serif;font-size: 22px;}
+
 
 mat-card {
   height: 99% !important;
@@ -20,7 +23,7 @@ mat-card {
 mat-card-title{
   margin-left: 5px;
   margin-top: 5px;
-  background-color: #8aa88a;
+  background-color:  #ccebff;
   border-radius: 6px;
   padding-left: 10px;
 }
@@ -41,19 +44,20 @@ mat-card img{
   padding-top: 4px;
   width: 150px;
   margin: 0 20px 0 20px;
-  border: solid gold;
+  border: solid #3bab5a;
 }
 
 mat-card-footer{
   font-size: 18px;
   margin-top: 55px;
   text-align: center;
-  background-color: gold;
+  background-color: #3bab5a;
   padding-top: 10px;
   padding-bottom: 10px;
+  font-family: ui-sans-serif
 }
 
 mat-card-footer a{
   text-decoration: none;
-  color: black;
+  color: white;
 }
