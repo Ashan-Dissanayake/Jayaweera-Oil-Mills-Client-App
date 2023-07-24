@@ -7,6 +7,9 @@ import {HomeComponent} from "./view/home/home.component";
 import {UserComponent} from "./view/modules/user/user.component";
 import {ProductComponent} from "./view/modules/product/product.component";
 import {OrderComponent} from "./view/modules/order/order.component";
+import {PrivilageComponent} from "./view/modules/privilage/privilage.component";
+import {ExporterComponent} from "./view/modules/exporter/exporter.component";
+import {InvoiceComponent} from "./view/modules/invoice/invoice.component";
 
 const routes: Routes = [
   {path: "login", component: LoginComponent},
@@ -20,6 +23,9 @@ const routes: Routes = [
       {path: "user", component: UserComponent},
       {path: "product", component: ProductComponent},
       {path: "order", component: OrderComponent},
+      {path: "privilege", component: PrivilageComponent},
+      {path: "exporter", component: ExporterComponent},
+      {path: "invoice", component: InvoiceComponent},
     ]
   },
   {

@@ -38,9 +38,11 @@ export class EmployeeComponent {
   data!: MatTableDataSource<Employee>;
   imageurl: string = '';
   @ViewChild(MatPaginator) paginator!: MatPaginator;
+
   imageempurl: string = 'assets/default.png';
 
   uiassist: UiAssist;
+
   employee!: Employee;
   oldemployee!: Employee|undefined;
 
@@ -51,6 +53,7 @@ export class EmployeeComponent {
   enadel:boolean = false;
 
   employees: Array<Employee> = [];
+
   genders: Array<Gender> = [];
   designations: Array<Designation> = [];
   employeestatuses: Array<Employeestatus> = [];
@@ -114,8 +117,8 @@ export class EmployeeComponent {
   }
 
   initialize(){
-    this.createView();
 
+    this.createView();
 
     this.gs.getAllList().then((gens: Gender[]) => {
       this.genders = gens;
@@ -143,6 +146,7 @@ export class EmployeeComponent {
   }
 
   loadTable(query: string) {
+
     this.es.getAll(query)
       .then((emps: Employee[]) => {
         this.employees = emps;

@@ -1,5 +1,6 @@
 import {Component} from '@angular/core';
 import {Router} from "@angular/router";
+import {AuthorizationManager} from "../../service/authorizationmanager";
 
 @Component({
   selector: 'app-mainwindow',
@@ -11,11 +12,18 @@ export class MainwindowComponent {
   opened: boolean = true;
 
 
-  constructor(private router: Router) {
+
+  constructor(private router: Router,public authService: AuthorizationManager) {
   }
 
+
   logout(): void {
-    this.router.navigateByUrl("login");
+    this.router.navigateByUrl("login")
+    this.authService.clearUsername();
+    this.authService.clearButtonState();
+    this.authService.clearMenuState();
   }
+  menuItems = this.authService.menuItems;
+
 
 }

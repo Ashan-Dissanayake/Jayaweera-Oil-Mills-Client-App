@@ -9,14 +9,13 @@ export class AuthenticateService {
   constructor(private http: HttpClient) {
   }
 
-  async authenticate(username: string, password: string): Promise<any | undefined> {
-
-    return this.http.post<any>("http://localhost/miserver/", {
+  async post(username: string, password: string): Promise<any>{
+    //console.log("Employee Adding-"+JSON.stringify(employee));
+    //employee.number="47457";
+    return this.http.post<[]>('http://localhost:8080/login', {
       username: username,
       password: password,
-      headers: {"Content-type": "application/x-www-form-urlencoded"}
-    }).toPromise();
-
+    }, { observe: 'response' } ).toPromise();
   }
 
 

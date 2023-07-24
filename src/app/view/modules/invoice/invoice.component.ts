@@ -1,59 +1,58 @@
 import {Component, ViewChild} from '@angular/core';
+import {FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
 import {MatTableDataSource} from "@angular/material/table";
+import {Order} from "../../../entity/order";
 import {MatPaginator} from "@angular/material/paginator";
 import {UiAssist} from "../../../util/ui/ui.assist";
-import {Order} from "../../../entity/order";
-import {Orderservice} from "../../../service/orderservice";
-import {FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
-import {Exporter} from "../../../entity/exporter";
-import {ExporterService} from "../../../service/exporterservice";
+import {Invoice} from "../../../entity/invoice";
 import {Employee} from "../../../entity/employee";
-import {EmployeeService} from "../../../service/EmployeeService";
+import {Invoiceorderproduct} from "../../../entity/invoiceorderproduct";
+import {Invoicestatus} from "../../../entity/invoicestatus";
+import {Orderservice} from "../../../service/orderservice";
 import {DatePipe} from "@angular/common";
-import {ConfirmComponent} from "../../../util/dialog/confirm/confirm.component";
 import {MatDialog} from "@angular/material/dialog";
+import {Invoiceservice} from "../../../service/invoiceservice";
+import {Invoicestatusservice} from "../../../service/invoicestatusservice";
 import {Product} from "../../../entity/product";
-import {Productservice} from "../../../service/productservice";
-import {Orderproduct} from "../../../entity/orderproduct";
-import {Orderstatusservice} from "../../../service/orderstatusservice";
-import {Orderstatus} from "../../../entity/orderstatus";
+import {ConfirmComponent} from "../../../util/dialog/confirm/confirm.component";
 import {MessageComponent} from "../../../util/dialog/message/message.component";
+import {Productservice} from "../../../service/productservice";
+import {EmployeeService} from "../../../service/EmployeeService";
 
 @Component({
-  selector: 'app-order',
-  templateUrl: './order.component.html',
-  styleUrls: ['./order.component.css']
+  selector: 'app-invoice',
+  templateUrl: './invoice.component.html',
+  styleUrls: ['./invoice.component.css']
 })
-export class OrderComponent {
+export class InvoiceComponent {
 
   public csearch!: FormGroup;
   public ssearch!: FormGroup;
   public form!: FormGroup;
   public innerform!: FormGroup;
 
-  columns: string[] = ['exporter','employee','doplaced', 'doexpected', 'expectedgrandtotal','description','orderstatus'];
-  headers: string[] = ['Exporter','Employee', 'Do Placed', 'Do Expected', 'Expected Grand Total','Description','Invoice Status'];
-  binders: string[] = ['exporter.name','employee.callingname','doplaced', 'doexpected', 'expectedgrandtotal','description','orderstatus.name'];
+  columns: string[] = ['name', 'grandtotal', 'date', 'employee', 'invoicestatus'];
+  headers: string[] = ['Name', 'Grand Total', 'Date', 'Employee', 'Invoice Status'];
+  binders: string[] = ['name', 'grandtotal', 'date', 'employee.callingname', 'invoicestatus.name'];
 
-  cscolumns: string[] = ['csexporter','csemployee','csdoplaced', 'csdoexpected', 'csexpectedgrandtotal','csdescription','csorderstatus'];
-  csprompts: string[] = ['Search by Exporter','Search by Employee', 'Search by Do Placed', 'Search by Do Expected',
-    'Search by Expected Grand Total','Search by Description','Search by Status'];
+  cscolumns: string[] = ['csname', 'csgrandtotal', 'csdate', 'csemployee', 'csinvoicestatus'];
+  csprompts: string[] = ['Search by Name', 'Search by Grand Total', 'Search By Date', 'Search By Employee', 'Search by Invoice Status'];
 
-  incolumns: string[] = ['name', 'quatity', 'unitprice', 'linetotal', 'remove'];
-  inheaders: string[] = ['Name', 'Quantity', 'Unit Price', 'Expected Line Total', 'Remove'];
-  inbinders: string[] = ['product.name', 'qty', 'product.price', 'expectedlinetotal', 'getBtn()'];
+  incolumns: string[] = ['name', 'quatity', 'linetotal', 'remove'];
+  inheaders: string[] = ['Name', 'Quantity', 'Line Total', 'Remove'];
+  inbinders: string[] = ['product.name', 'qty', 'linetotal', 'getBtn()'];
 
-  orders: Array<Order> = [];
-  data!: MatTableDataSource<Order>;
+  data!: MatTableDataSource<Invoice>;
   @ViewChild(MatPaginator) paginator!: MatPaginator;
 
-  indata!:MatTableDataSource<Orderproduct>
+  indata!:MatTableDataSource<Invoiceorderproduct>
 
-  exporters:Array<Exporter> = [];
-  employees:Array<Employee> = [];
-  producs:Array<Product> = [];
-  orderproducts:Array<Orderproduct> = [];
-  orderstatuses:Array<Orderstatus> = [];
+  invoices: Array<Invoice> = [];
+  invoicestasuses: Array<Invoicestatus> = [];
+  employees: Array<Employee> = [];
+  orders: Array<Order> = [];
+  invoiceorderproducts: Array<Invoiceorderproduct> = [];
+  products: Array<Product> = [];
 
   grandtotal = 0;
 
@@ -61,60 +60,58 @@ export class OrderComponent {
 
   uiassist: UiAssist;
 
-  order!:Order;
-  oldorder!:Order;
+  invoice!: Invoice;
+  oldinvoice!: Invoice;
 
   innerdata:any;
   oldinnerdata:any;
 
-  selectedrow:any;
+  selectedrow: any;
 
-  enaadd:boolean = false;
-  enaupd:boolean = false;
-  enadel:boolean = false;
+  enaadd: boolean = false;
+  enaupd: boolean = false;
+  enadel: boolean = false;
 
   constructor(
-    private os:Orderservice,
-    private ost:Orderstatusservice,
-    private fb:FormBuilder,
-    private ex:ExporterService,
-    private es:EmployeeService,
-    private ps:Productservice,
-    private dp:DatePipe,
-    private dg:MatDialog
+    private is: Invoiceservice,
+    private ist: Invoicestatusservice,
+    private fb: FormBuilder,
+    private os: Orderservice,
+    private es: EmployeeService,
+    private ps: Productservice,
+    private dp: DatePipe,
+    private dg: MatDialog
   ) {
     this.uiassist = new UiAssist(this);
 
     this.csearch = this.fb.group({
-      "csexporter": new FormControl(),
+      "csname": new FormControl(),
+      "csgrandtotal": new FormControl(),
+      "csdate": new FormControl(),
       "csemployee": new FormControl(),
-      "csdoplaced": new FormControl(),
-      "csdoexpected": new FormControl(),
-      "csexpectedgrandtotal": new FormControl(),
-      "csdescription": new FormControl(),
-      "csorderstatus": new FormControl()
+      "csinvoicestatus": new FormControl()
     });
 
     this.ssearch = this.fb.group({
-      "ssexporter":new FormControl(),
-      "ssemployee":new FormControl(),
-      "ssdoplaced":new FormControl()
+      "ssname":new FormControl(),
+      "ssinvoicestatus":new FormControl(),
+      "ssdate":new FormControl()
+
     });
 
     this.form = this.fb.group({
-      "exporter":new FormControl('',Validators.required),
+      "name":new FormControl('',Validators.required),
+      "grandtotal":new FormControl('',Validators.required),
+      "date":new FormControl('',Validators.required),
       "employee":new FormControl('',Validators.required),
-      "doplaced":new FormControl('',Validators.required),
-      "doexpected":new FormControl('',Validators.required),
-      "expectedgrandtotal":new FormControl('',Validators.required),
-      "description":new FormControl('',Validators.required),
-      "orderstatus":new FormControl('',Validators.required)
+      "order":new FormControl('',Validators.required),
+      "invoicestatus":new FormControl('',Validators.required)
     });
 
     this.innerform = this.fb.group({
-      "product":new FormControl(),
+      "orderproduct":new FormControl(),
       "qty": new FormControl(),
-      "expectedlinetotal":new FormControl()
+      "linetotal":new FormControl()
     });
   }
 
@@ -125,12 +122,10 @@ export class OrderComponent {
   initialize() {
     this.createView();
 
-    this.ex.getAllList().then((exps:Exporter[])=>this.exporters = exps);
-    this.es.getAllListNameId().then((emps:Employee[])=> this.employees = emps);
-    this.ps.getAllListNameId().then((pds:Product[])=> this.producs = pds);
-    this.ost.getAllList().then((ost:Orderstatus[])=> this.orderstatuses = ost);
-
-    this.createForm();
+    this.ist.getAllList().then((invs:Invoicestatus[])=>this.invoicestasuses = invs);
+    this.es.getAllListNameId().then((emps:Employee[])=>this.employees = emps);
+    this.os.getAllListNameId().then((ords:Order[])=>this.orders = ords);
+    this.ps.getAllListNameId().then((pds:Product[])=> this.products = pds);
   }
 
   createView() {
@@ -140,9 +135,9 @@ export class OrderComponent {
 
   loadTable(query: string) {
 
-    this.os.getAll(query)
-      .then((ords: Order[]) => {
-        this.orders = ords;
+    this.is.getAll(query)
+      .then((invs: Invoice[]) => {
+        this.invoices = invs;
         this.imageurl = 'assets/fullfilled.png';
       })
       .catch((error) => {
@@ -150,24 +145,21 @@ export class OrderComponent {
         this.imageurl = 'assets/rejected.png';
       })
       .finally(() => {
-        this.data = new MatTableDataSource(this.orders);
+        this.data = new MatTableDataSource(this.invoices);
         this.data.paginator = this.paginator;
       });
 
   }
-
   filterTable(): void {
 
     const cserchdata = this.csearch.getRawValue();
 
-    this.data.filterPredicate = (order: Order, filter: string) => {
-      return(cserchdata.csexporter == null || order.exporter.name.toLowerCase().includes(cserchdata.csexporter)) &&
-        (cserchdata.csemployee == null || order.employee.callingname.toLowerCase().includes(cserchdata.csemployee)) &&
-        (cserchdata.csdoplaced == null || order.doplaced.includes(cserchdata.csdoplaced)) &&
-        (cserchdata.csdoexpected == null || order.doexpected.includes(cserchdata.csdoexpected)) &&
-        (cserchdata.csexpectedgrandtotal == null || order.expectedgrandtotal.toString().includes(cserchdata.csexpectedgrandtotal)) &&
-        (cserchdata.csdescription == null || order.description.toLowerCase().includes(cserchdata.csdescription)) &&
-        (cserchdata.csorderstatus == null || order.orderstatus.name.toLowerCase().includes(cserchdata.csorderstatus));        ;
+    this.data.filterPredicate = (invoice: Invoice, filter: string) => {
+      return(cserchdata.csname == null || invoice.name.toLowerCase().includes(cserchdata.csname)) &&
+        (cserchdata.csgrandtotal == null || invoice.grandtotal.toString().includes(cserchdata.csgrandtotal)) &&
+        (cserchdata.csdate == null || invoice.date.includes(cserchdata.csdate)) &&
+        (cserchdata.csemployee == null || invoice.employee.callingname.includes(cserchdata.csemployee)) &&
+        (cserchdata.csinvoicestatus == null || invoice.invoicestatus.name.toLowerCase().includes(cserchdata.csinvoicestatus));        ;
     };
 
     this.data.filter = 'xx';
@@ -178,16 +170,15 @@ export class OrderComponent {
 
     const ssearchdata = this.ssearch.getRawValue();
 
-    let exporterid = ssearchdata.ssexporter;
-    let employeeid = ssearchdata.ssemployee;
-    let doplaced = this.dp.transform(ssearchdata.ssdoplaced,'yyyy-MM-dd');
+    let invoicestatusid = ssearchdata.ssinvoicestatus;
+    let name = ssearchdata.ssname;
+    let date = this.dp.transform(ssearchdata.ssdate,'yyyy-MM-dd');
 
     let query = "";
 
-    if (exporterid != null) query = query + "&exporterid=" + exporterid;
-    if (employeeid != null) query = query + "&employeeid=" + employeeid;
-    if (doplaced != null && doplaced.trim() != "") query = query + "&doplaced=" + doplaced;
-
+    if (invoicestatusid != null) query = query + "&invoicestatusid=" + invoicestatusid;
+    if (name != null) query = query + "&name=" + name;
+    if (date != null && date.trim() != "") query = query + "&date=" + date;
 
     if (query != "") query = query.replace(/^./,"?")
     this.loadTable(query);
@@ -214,7 +205,6 @@ export class OrderComponent {
     return `<button mat-raised-button>Remove</button>`;
   }
 
-
   id = 0;
 
   btnaddMc() {
@@ -222,69 +212,65 @@ export class OrderComponent {
     this.innerdata = this.innerform.getRawValue();
 
 
-    if( this.innerdata != null){
+    if (this.innerdata != null) {
 
-      let invoiceitem = new  Orderproduct(this.id,this.innerdata.product,this.innerdata.qty,this.innerdata.expectedlinetotal);
+      let invoiceitem = new Invoiceorderproduct(this.id, this.innerdata.orderproduct, this.innerdata.qty, this.innerdata.linetotal);
 
-      let tem: Orderproduct[] = [];
-      if(this.indata != null) this.indata.data.forEach((i) => tem.push(i));
+      let tem: Invoiceorderproduct[] = [];
+      if (this.indata != null) this.indata.data.forEach((i) => tem.push(i));
 
-      this.orderproducts = [];
-      tem.forEach((t)=> this.orderproducts.push(t));
+      this.invoiceorderproducts = [];
+      tem.forEach((t) => this.invoiceorderproducts.push(t));
 
-      this.orderproducts.push(invoiceitem);
-      this.indata = new MatTableDataSource(this.orderproducts);
+      this.invoiceorderproducts.push(invoiceitem);
+      this.indata = new MatTableDataSource(this.invoiceorderproducts);
 
       this.id++;
 
-      this.calculateGrandTotal();
+      this.calculateFinalTotal();
       this.innerform.reset();
 
     }
-
   }
+    calculateFinalTotal(){
 
-  calculateGrandTotal(){
+      this.grandtotal = 0;
 
-    this.grandtotal = 0;
+      this.indata.data.forEach((e)=>{
+        this.grandtotal = this.grandtotal+e.linetotal
+      })
 
-    this.indata.data.forEach((e)=>{
-      this.grandtotal = this.grandtotal+e.expectedlinetotal
-    })
-
-    this.form.controls['expectedgrandtotal'].setValue(this.grandtotal);
-  }
-
-  deleteRaw(x:any) {
-
-    // this.indata.data = this.indata.data.reduce((element) => element.id !== x.id);
-
-    let datasources = this.indata.data
-
-    const index = datasources.findIndex(item => item.id === x.id);
-    if (index > -1) {
-      datasources.splice(index, 1);
+      this.form.controls['grandtotal'].setValue(this.grandtotal);
     }
-    this.indata.data = datasources;
-    this.orderproducts = this.indata.data;
 
-    this.calculateGrandTotal();
-  }
+    deleteRaw(x:any) {
 
+      // this.indata.data = this.indata.data.reduce((element) => element.id !== x.id);
+
+      let datasources = this.indata.data
+
+      const index = datasources.findIndex(item => item.id === x.id);
+      if (index > -1) {
+        datasources.splice(index, 1);
+      }
+      this.indata.data = datasources;
+      this.invoiceorderproducts = this.indata.data;
+
+      this.calculateFinalTotal();
+    }
 
   createForm() {
 
-    this.form.controls['exporter'].setValidators([Validators.required]);
+    this.form.controls['name'].setValidators([Validators.required]);
+    this.form.controls['grandtotal'].setValidators([Validators.required]);
+    this.form.controls['date'].setValidators([Validators.required]);
     this.form.controls['employee'].setValidators([Validators.required]);
-    this.form.controls['doplaced'].setValidators([Validators.required]);
-    this.form.controls['doexpected'].setValidators([Validators.required]);
-    this.form.controls['expectedgrandtotal'].setValidators([Validators.required]);
-    this.form.controls['description'].setValidators([Validators.required]);
-    this.form.controls['orderstatus'].setValidators([Validators.required]);
+    this.form.controls['order'].setValidators([Validators.required]);
+    this.form.controls['invoicestatus'].setValidators([Validators.required]);
 
-    this.innerform.controls['product'].setValidators([Validators.required]);
+    this.innerform.controls['orderproduct'].setValidators([Validators.required]);
     this.innerform.controls['qty'].setValidators([Validators.required]);
-    this.innerform.controls['expectedlinetotal'].setValidators([Validators.required]);
+    this.innerform.controls['linetotal'].setValidators([Validators.required]);
 
     Object.values(this.form.controls).forEach( control => { control.markAsTouched(); } );
     Object.values(this.innerform.controls).forEach( control => { control.markAsTouched(); } );
@@ -294,12 +280,12 @@ export class OrderComponent {
       const control = this.form.controls[controlName];
       control.valueChanges.subscribe(value => {
           // @ts-ignore
-          if (controlName == "doplaced" || controlName =="doexpected")
+          if (controlName == "date")
             value = this.dp.transform(new Date(value), 'yyyy-MM-dd');
 
-          if (this.oldorder != undefined && control.valid) {
+          if (this.oldinvoice != undefined && control.valid) {
             // @ts-ignore
-            if (value === this.order[controlName]) {
+            if (value === this.invoice[controlName]) {
               control.markAsPristine();
             } else {
               control.markAsDirty();
@@ -311,7 +297,6 @@ export class OrderComponent {
       );
 
     }
-
 
     for (const controlName in this.innerform.controls) {
       const control = this.innerform.controls[controlName];
@@ -331,9 +316,7 @@ export class OrderComponent {
       );
 
     }
-
     this.enableButtons(true,false,false);
-
   }
 
   enableButtons(add:boolean, upd:boolean, del:boolean){
@@ -341,7 +324,6 @@ export class OrderComponent {
     this.enaupd=upd;
     this.enadel=del;
   }
-
 
   getErrors(): string {
 
@@ -362,7 +344,7 @@ export class OrderComponent {
     if (errors != "") {
       const errmsg = this.dg.open(MessageComponent, {
         width: '500px',
-        data: {heading: "Errors - Order Add ", message: "You have following Errors <br> " + errors}
+        data: {heading: "Errors - Invoice Add ", message: "You have following Errors <br> " + errors}
       });
       errmsg.afterClosed().subscribe(async result => {
         if (!result) {
@@ -371,28 +353,26 @@ export class OrderComponent {
       });
     } else {
 
-      this.order = this.form.getRawValue();
-      this.order.orderproducts = this.orderproducts;
+      this.invoice = this.form.getRawValue();
+      this.invoice.invoiceorderproduct = this.invoiceorderproducts;
 
       // @ts-ignore
-      this.orderproducts.forEach((i)=> delete  i.id);
+      this.invoiceorderproducts.forEach((i)=> delete  i.id);
 
       // @ts-ignore
-      this.order.doplaced = this.dp.transform(this.order.doplaced,"yyy-mm-dd");
+      this.invoice.date = this.dp.transform(this.invoice.date,"yyy-mm-dd");
 
-      // @ts-ignore
-      this.order.doexpected = this.dp.transform(this.order.doexpected,"yyy-mm-dd");
 
       let invdata: string = "";
 
-      invdata = invdata + "<br>Ordered Day is : " + this.order.doplaced
-      invdata = invdata + "<br>Export by : " + this.order.exporter.name;
+      invdata = invdata + "<br>Invoice Day is : " + this.invoice.date
+      invdata = invdata + "<br>Added by : " + this.invoice.employee.callingname;
 
       const confirm = this.dg.open(ConfirmComponent, {
         width: '500px',
         data: {
-          heading: "Confirmation - Order Add",
-          message: "Are you sure to Add the following Order? <br> <br>" + invdata
+          heading: "Confirmation - Invoice Add",
+          message: "Are you sure to Add the following Invoice? <br> <br>" + invdata
         }
       });
 
@@ -402,7 +382,7 @@ export class OrderComponent {
       confirm.afterClosed().subscribe(async result => {
         if (result) {
           // console.log("EmployeeService.add(emp)");
-          this.os.add(this.order).then((responce: [] | undefined) => {
+          this.is.add(this.invoice).then((responce: [] | undefined) => {
             //console.log("Res-" + responce);
             //console.log("Un-" + responce == undefined);
             if (responce != undefined) { // @ts-ignore
@@ -447,28 +427,27 @@ export class OrderComponent {
     }
   }
 
-
-  fillForm(order: Order) {
+  fillForm(invoice: Invoice) {
 
     this.enableButtons(false,true,true);
 
-    this.selectedrow=order;
+    this.selectedrow=invoice;
 
-    this.order = JSON.parse(JSON.stringify(order));
-    this.oldorder = JSON.parse(JSON.stringify(order));
-
-    //@ts-ignore
-    this.order.exporter = this.exporters.find(e => e.id === this.order.exporter.id);
+    this.invoice = JSON.parse(JSON.stringify(invoice));
+    this.oldinvoice = JSON.parse(JSON.stringify(invoice));
 
     //@ts-ignore
-    this.order.employee = this.employees.find(e => e.id === this.order.employee.id);
+    this.invoice.order = this.orders.find(o => o.id === this.invoice.order.id);
 
     //@ts-ignore
-    this.order.orderstatus = this.orderstatuses.find(s => s.id === this.order.orderstatus.id);
+    this.invoice.employee = this.employees.find(e => e.id === this.invoice.employee.id);
 
-    this.indata = new MatTableDataSource(this.order.orderproducts);
+    //@ts-ignore
+    this.invoice.invoicestatus = this.invoicestasuses.find(i => i.id === this.invoice.invoicestatus.id);
 
-    this.form.patchValue(this.order);
+    this.indata = new MatTableDataSource(this.invoice.invoiceorderproduct);
+
+    this.form.patchValue(this.invoice);
     this.form.markAsPristine();
 
     for (const controlName in this.innerform.controls) {
@@ -491,7 +470,6 @@ export class OrderComponent {
 
   }
 
-
   update() {
 
     let errors = this.getErrors();
@@ -500,7 +478,7 @@ export class OrderComponent {
 
       const errmsg = this.dg.open(MessageComponent, {
         width: '500px',
-        data: {heading: "Errors - Order Update ", message: "You have following Errors <br> " + errors}
+        data: {heading: "Errors - Invoice Update ", message: "You have following Errors <br> " + errors}
       });
       errmsg.afterClosed().subscribe(async result => { if (!result) { return; } });
 
@@ -523,22 +501,20 @@ export class OrderComponent {
         confirm.afterClosed().subscribe(async result => {
           if (result) {
 
-            this.order = this.form.getRawValue();
+            this.invoice = this.form.getRawValue();
 
-            this.order.orderproducts = this.orderproducts;
-
-            // @ts-ignore
-            this.orderproducts.forEach((i)=> delete  i.id);
+            this.invoice.invoiceorderproduct = this.invoiceorderproducts;
 
             // @ts-ignore
-            this.order.doplaced = this.dp.transform(this.order.doplaced,"yyy-mm-dd");
+            this.invoiceorderproducts.forEach((i)=> delete  i.id);
 
             // @ts-ignore
-            this.order.doexpected = this.dp.transform(this.order.doexpected,"yyy-mm-dd");
+            this.invoice.date = this.dp.transform(this.invoice.date,"yyy-mm-dd");
 
-            this.order.id = this.oldorder.id;
 
-            this.os.update(this.order).then((responce: [] | undefined) => {
+            this.invoice.id = this.oldinvoice.id;
+
+            this.is.update(this.invoice).then((responce: [] | undefined) => {
               if (responce != undefined) { // @ts-ignore
                 // @ts-ignore
                 updstatus = responce['errors'] == "";
@@ -561,7 +537,7 @@ export class OrderComponent {
 
               const stsmsg = this.dg.open(MessageComponent, {
                 width: '500px',
-                data: {heading: "Status -Order Update", message: updmessage}
+                data: {heading: "Status - Invoice Update", message: updmessage}
               });
               stsmsg.afterClosed().subscribe(async result => { if (!result) { return; } });
 
@@ -573,24 +549,21 @@ export class OrderComponent {
 
         const updmsg = this.dg.open(MessageComponent, {
           width: '500px',
-          data: {heading: "Confirmation - Order Update", message: "Nothing Changed"}
+          data: {heading: "Confirmation - Invoice Update", message: "Nothing Changed"}
         });
         updmsg.afterClosed().subscribe(async result => { if (!result) { return; } });
 
       }
     }
-
-
   }
-
 
   delete() : void {
 
     const confirm = this.dg.open(ConfirmComponent, {
       width: '500px',
       data: {
-        heading: "Confirmation - Order Delete",
-        message: "Are you sure to Delete following Order? <br> <br>" + this.order.exporter.name
+        heading: "Confirmation - Invoice Delete",
+        message: "Are you sure to Delete following Invoice? <br> <br>" + this.invoice.name
       }
     });
 
@@ -599,7 +572,7 @@ export class OrderComponent {
         let delstatus: boolean = false;
         let delmessage: string = "Server Not Found";
 
-        this.os.delete(this.order.id).then((responce: [] | undefined) => {
+        this.is.delete(this.invoice.id).then((responce: [] | undefined) => {
 
           if (responce != undefined) { // @ts-ignore
             delstatus = responce['errors'] == "";
@@ -623,7 +596,7 @@ export class OrderComponent {
           }
           const stsmsg = this.dg.open(MessageComponent, {
             width: '500px',
-            data: {heading: "Status - Order Delete ", message: delmessage}
+            data: {heading: "Status - Invoice Delete ", message: delmessage}
           });
           stsmsg.afterClosed().subscribe(async result => {
             if (!result) {
@@ -635,5 +608,6 @@ export class OrderComponent {
       }
     });
   }
+
 
 }

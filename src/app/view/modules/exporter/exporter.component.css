@@ -1,0 +1,118 @@
+/* Desktop styles */
+@media screen and (min-width: 768px) {
+  /* Add your desktop-specific styles here */
+}
+
+/* Tablet styles */
+@media screen and (min-width: 481px) and (max-width: 767px) {
+  /* Add your tablet-specific styles here */
+}
+
+/* Mobile styles */
+@media screen and (max-width: 480px) {
+  /* Add your mobile-specific styles here */
+}
+
+/*mat-grid-list{*/
+/*  height: 100%;*/
+/*}*/
+
+mat-card {
+  width: 170%;
+  height: 100%;
+  margin: 10px 10px -5px 10px !important;
+  overflow: hidden;
+}
+
+mat-card-content {
+  overflow: auto;
+  height: 100%;
+}
+
+mat-card-title{
+  font-family: ui-sans-serif;
+  font-size: 22px;
+}
+
+mat-grid-tile{
+  overflow: visible;
+  margin-bottom: 20px; /* Adjust the margin size as needed */
+}
+
+mat-card-header {
+  background: #ccebff;
+  border-radius: 5px;
+  padding: 6px 10px;
+}
+
+.mat-table {
+  display: block;
+  width: 100%;
+  overflow: auto;
+}
+
+#loading img{
+  width: 30px;
+  height: 30px;
+}
+.mat-paginator-sticky {
+  position: sticky;
+  bottom: 1px;
+}
+/* Highlight rows on hover */
+.mat-row:hover {
+  cursor: pointer;
+}
+.csearch{
+  height: 40px;
+  width: 100%;
+  margin-top: 5px;
+}
+
+#ssearch mat-card-content{padding-top: 30px}
+
+#ssearch mat-form-field{padding-left: 15px; width: 250px}
+
+#ssearch button{width: 195px; margin-left: 10px; margin-top: 5px; background-color: #3bab5a
+}
+/* Exporter Form */
+#exporterform { padding-top: 20px; }
+
+#selectbutton{ margin-top: -100px; }
+
+/* Employee Form > Button Panel */
+#butpanel{ margin-top: 30px; margin-bottom: 30px; }
+#butpanel button{ width: 82px; margin:3px; color: white; }
+
+#clearcolor{
+  background-color: #6b6b73;
+}
+
+#searchcolor{
+  background-color: #3bab5a;
+}
+
+#updatecolor{
+  background-color: #2443a8;
+}
+
+#deletecolor{
+  background-color: #e13737;
+}
+
+.selected-row{
+  background-color: #c9e6ff!important;
+}
+
+
+.mat-form-field .ng-dirty{
+  background-color: #80bdff;
+}
+
+button:disabled{
+  opacity: 0.5;
+}
+
+#exporterform mat-form-field .ng-dirty{
+  background-color: #85a2c7;
+}

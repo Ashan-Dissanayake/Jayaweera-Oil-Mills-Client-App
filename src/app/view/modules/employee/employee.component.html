@@ -185,6 +185,7 @@
 
           <mat-header-row id="th" *matHeaderRowDef="columns; Sticky: true"></mat-header-row>
           <mat-header-row id="th" *matHeaderRowDef="cscolumns; Sticky: true"></mat-header-row>
+
           <mat-row *matRowDef="let row; columns: columns" (click)="fillForm(row)" [ngClass]="{'selected-row': row === selectedrow}"></mat-row>
 
         </mat-table>

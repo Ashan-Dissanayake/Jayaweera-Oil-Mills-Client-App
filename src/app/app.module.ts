@@ -36,6 +36,9 @@ import {AuthorizationManager} from "./service/authorizationmanager";
 import {ProductComponent} from "./view/modules/product/product.component";
 import {UserComponent} from "./view/modules/user/user.component";
 import {OrderComponent} from "./view/modules/order/order.component";
+import {ExporterComponent} from "./view/modules/exporter/exporter.component";
+import {InvoiceComponent} from "./view/modules/invoice/invoice.component";
+import {PrivilageComponent} from "./view/modules/privilage/privilage.component";
 
 @NgModule({
   bootstrap: [AppComponent],
@@ -49,7 +52,10 @@ import {OrderComponent} from "./view/modules/order/order.component";
     MessageComponent,
     ConfirmComponent,
     ProductComponent,
-    OrderComponent
+    OrderComponent,
+    ExporterComponent,
+    InvoiceComponent,
+    PrivilageComponent
 
   ],
   imports: [
