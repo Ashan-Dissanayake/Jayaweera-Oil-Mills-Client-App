@@ -29,8 +29,7 @@ export class Orderservice{
     // @ts-ignore
     return this.http.delete('http://localhost:8080/orders/' + id).toPromise(); }
 
-  async getAllListNameId(): Promise<Array<Order>> {
-
+  async getAllList(): Promise<Array<Order>> {
     const orders = await this.http.get<Array<Order>>('http://localhost:8080/orders/list').toPromise();
     if(orders == undefined){
       return [];

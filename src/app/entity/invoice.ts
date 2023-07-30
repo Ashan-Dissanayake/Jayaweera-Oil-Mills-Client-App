@@ -1,6 +1,6 @@
 import {Employee} from "./employee";
 import {Invoicestatus} from "./invoicestatus";
-import {Invoiceorderproduct} from "./invoiceorderproduct";
+import {Invoiceproduct} from "./invoiceproduct";
 import {Order} from "./order";
 
 export class Invoice{
@@ -13,10 +13,10 @@ export class Invoice{
   public employee!:Employee;
   public order!:Order;
   public invoicestatus!:Invoicestatus;
-  public invoiceorderproduct!:Array<Invoiceorderproduct>;
+  public invoiceorderproduct!:Array<Invoiceproduct>;
 
   constructor(id:number,name:string,grandtotal:number,date:string,employee:Employee,order:Order,invoicestatus:Invoicestatus,
-              invoiceorderproduct:Array<Invoiceorderproduct>) {
+              invoiceorderproduct:Array<Invoiceproduct>) {
     this.id=id;
     this.name=name;
     this.grandtotal=grandtotal;

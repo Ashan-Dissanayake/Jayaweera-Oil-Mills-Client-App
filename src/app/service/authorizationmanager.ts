@@ -3,6 +3,7 @@ import { AuthoritySevice } from './authoritysevice';
 
 @Injectable()
 export class AuthorizationManager {
+
   private readonly localStorageUsreName = 'username';
   private readonly localStorageButtonKey = 'buttonState';
   private readonly localStorageMenus = 'menuState';

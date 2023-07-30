@@ -6,7 +6,7 @@ import {MatPaginator} from "@angular/material/paginator";
 import {UiAssist} from "../../../util/ui/ui.assist";
 import {Invoice} from "../../../entity/invoice";
 import {Employee} from "../../../entity/employee";
-import {Invoiceorderproduct} from "../../../entity/invoiceorderproduct";
+import {Invoiceproduct} from "../../../entity/invoiceproduct";
 import {Invoicestatus} from "../../../entity/invoicestatus";
 import {Orderservice} from "../../../service/orderservice";
 import {DatePipe} from "@angular/common";
@@ -45,13 +45,13 @@ export class InvoiceComponent {
   data!: MatTableDataSource<Invoice>;
   @ViewChild(MatPaginator) paginator!: MatPaginator;
 
-  indata!:MatTableDataSource<Invoiceorderproduct>
+  indata!:MatTableDataSource<Invoiceproduct>
 
   invoices: Array<Invoice> = [];
   invoicestasuses: Array<Invoicestatus> = [];
   employees: Array<Employee> = [];
   orders: Array<Order> = [];
-  invoiceorderproducts: Array<Invoiceorderproduct> = [];
+  invoiceorderproducts: Array<Invoiceproduct> = [];
   products: Array<Product> = [];
 
   grandtotal = 0;
@@ -124,8 +124,10 @@ export class InvoiceComponent {
 
     this.ist.getAllList().then((invs:Invoicestatus[])=>this.invoicestasuses = invs);
     this.es.getAllListNameId().then((emps:Employee[])=>this.employees = emps);
-    this.os.getAllListNameId().then((ords:Order[])=>this.orders = ords);
+    this.os.getAllList().then((ords:Order[])=>this.orders = ords);
     this.ps.getAllListNameId().then((pds:Product[])=> this.products = pds);
+
+    this.createForm();
   }
 
   createView() {
@@ -214,9 +216,9 @@ export class InvoiceComponent {
 
     if (this.innerdata != null) {
 
-      let invoiceitem = new Invoiceorderproduct(this.id, this.innerdata.orderproduct, this.innerdata.qty, this.innerdata.linetotal);
+      let invoiceitem = new Invoiceproduct(this.id, this.innerdata.orderproduct, this.innerdata.qty, this.innerdata.linetotal);
 
-      let tem: Invoiceorderproduct[] = [];
+      let tem: Invoiceproduct[] = [];
       if (this.indata != null) this.indata.data.forEach((i) => tem.push(i));
 
       this.invoiceorderproducts = [];
